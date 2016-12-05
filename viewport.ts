@@ -38,5 +38,5 @@ export class Viewport {
 }
 
 }
-new HYViewport.Viewport(1,320.640);
+new HYViewport.Viewport(1,320,640);
 
