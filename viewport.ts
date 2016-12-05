@@ -19,10 +19,9 @@ export class Viewport {
             e.stopPropagation();
             this.run()
         })
-        document.addEventListener('DOMContentLoaded',(e)=>{
-            e.stopPropagation();
-            this.run()
-        })
+
+        this.run()
+
     }
     private run(){
 

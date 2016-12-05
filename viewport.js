@@ -18,10 +18,7 @@ var HYViewport;
                 e.stopPropagation();
                 _this.run();
             });
-            document.addEventListener('DOMContentLoaded', function (e) {
-                e.stopPropagation();
-                _this.run();
-            });
+            this.run();
         }
         Viewport.prototype.run = function () {
             var html = document.children[0];
