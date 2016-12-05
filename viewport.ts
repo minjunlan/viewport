@@ -3,11 +3,16 @@ namespace HYViewport {
  * viewport
  */
 export class Viewport {
-    fontwidth = 54;
-    htmlwidth = 640;
-    constructor(fontwidth?:number,htmlwidth?:number) {
-        this.fontwidth = !!fontwidth ? fontwidth: this.fontwidth;
-        this.htmlwidth = !!htmlwidth ? htmlwidth: this.htmlwidth;
+    minwidth = 0;
+    maxwidth = 0;
+    times     = 1;      //字体与网页宽度到比的倍数,默认是1
+    fonthtml  = 0.1; //字体与网页宽度到比，字体／宽度
+
+    //
+    constructor(times?:number,minwidth?:number,maxwidth?:number) {
+        this.minwidth = !!minwidth ? minwidth : this.minwidth;
+        this.maxwidth = !!maxwidth ? maxwidth : this.maxwidth;
+        this.times    = !!times ? times : this.times;
         window.addEventListener('resize',(e)=>{
             e.stopPropagation();
             this.run()
@@ -18,20 +23,16 @@ export class Viewport {
         })
     }
     private run(){
-        let width = this.caculateWidth();
         let html = document.children[0];
-        if (width <= this.htmlwidth) {
-            html.setAttribute('style',`font-size: ${this.fontwidth*(width/this.htmlwidth)}px;`)
-        }else{
-            html.setAttribute('style',`font-size: ${this.fontwidth}px;`)
+        let width = html.clientWidth;
+        if (this.maxwidth !== 0 && this.minwidth !== 0){
+            if( width >= this.maxwidth ) width = this.maxwidth;
+            if( width <= this.minwidth ) width = this.minwidth;
         }
-
+        html.setAttribute('style',`font-size: ${ width * this.fonthtml * this.times }px;`)
     }
 
-    private caculateWidth():number{
-        return document.body.offsetWidth;
-    }
 }
 
 }
-new HYViewport.Viewport();
+new HYViewport.Viewport(1,320.640);
